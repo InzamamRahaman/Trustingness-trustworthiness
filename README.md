@@ -19,5 +19,5 @@ and generates a file that contains on each line:
 * Networkx
 
 # TODO
-1) Testing of code for correctness
-2) Efficiency improvements ?
+1. Testing of code for correctness
+2. Efficiency improvements ?
