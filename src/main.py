@@ -1,6 +1,8 @@
 import argparse
+
 import networkx as nx
-import TrustScores
+
+from src import TrustScores
 
 parser = argparse.ArgumentParser()
 
