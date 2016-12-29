@@ -18,6 +18,24 @@ and generates a file that contains on each line:
 * Numpy
 * Networkx
 
+# Usage
+Clone this repo by running
+    ``git clone ``
+
+There are four required command line arguments and a single optional:
+1. The input file; supplied by *--input*
+2. The output file; supplied by *--output*
+3. The number of iterations; supplied by *--k*
+4. The involvement score; supplied by *--s*
+5. Whether the input file contains a weighted graph; *-w* option
+
+## Example with unweighted graph 
+    ``python src/main.py --input graph/raw/epinions.edgelist --output scores/epinions.txt --k 10 --s 0.667``
+
+## Example with weighted graph 
+    ``python src/main.py --input graph/raw/epinions.edgelist --output scores/epinions.txt --k 10 --s 0.667 -w``
+
+
 # TODO
 1. Testing of code for correctness
 2. Efficiency improvements ?
