@@ -20,7 +20,7 @@ and generates a file that contains on each line:
 
 # Usage
 Clone this repo by running
-    ``git clone ``
+    ``git clone https://github.com/InzamamRahaman/Trustingness-trustworthiness.git``
 
 There are four required command line arguments and a single optional:
 1. The input file; supplied by *--input*
@@ -30,10 +30,10 @@ There are four required command line arguments and a single optional:
 5. Whether the input file contains a weighted graph; *-w* option
 
 ## Example with unweighted graph 
-    ``python src/main.py --input graph/raw/epinions.edgelist --output scores/epinions.txt --k 10 --s 0.667``
+    python src/main.py --input graph/raw/epinions.edgelist --output scores/epinions.txt --k 10 --s 0.667
 
 ## Example with weighted graph 
-    ``python src/main.py --input graph/raw/epinions.edgelist --output scores/epinions.txt --k 10 --s 0.667 -w``
+    python src/main.py --input graph/raw/epinions.edgelist --output scores/epinions.txt --k 10 --s 0.667 -w
 
 
 # TODO
