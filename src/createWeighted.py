@@ -13,7 +13,7 @@ for u, neighbours in graph.adjacency_iter():
     #print(neighbours)
     #print('node ', u, ' has ', num, ' neighbours')
     if num > 0:
-        w = 1.0 / float(num)
+        w = 1#1.0 / float(num)
         for k, _ in neighbours.iteritems():
             #print(u, ' , ', k)
             graph[u][k]['weight'] = w

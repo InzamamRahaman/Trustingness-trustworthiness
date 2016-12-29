@@ -15,11 +15,23 @@ def get_change(prev_ti, prev_tw, curr_ti, curr_tw):
     return max(get_max_key_diff(prev_ti, curr_ti), get_max_key_diff(prev_tw, curr_tw))
 
 
-def normalize(d):
-    #pass
-    s = np.sum(d.values())
-    for k, v in d.iteritems():
-        d[k] = v / s
+def normalize(d, method='sum-square'):
+    if method == 'sum-square':
+        s = np.sum(np.array(d.values()) ** 2)
+        for k, v in d.iteritems():
+            d[k] = v / s
+    elif method == 'min-max':
+        values = d.values()
+        min_val = np.min(values)
+        max_val = np.max(values)
+        denom = max_val - min_val
+        for k, v in d.iteritems():
+            d[k] = (v - min_val) / denom
+    else:
+        s = np.sum(np.array(d.values()))
+        for k, v in d.iteritems():
+            d[k] = v / s
+
 
 
 def compute(graph, k,involvement_score=1, delta=None):
@@ -38,6 +50,7 @@ def compute(graph, k,involvement_score=1, delta=None):
     prev_tw = dict()
     curr_ti = dict()
     curr_tw = dict()
+    n = float(graph.number_of_nodes())
     nodes = graph.nodes_iter()
     for u in nodes:
         prev_ti[u] = 1
@@ -60,34 +73,28 @@ def compute(graph, k,involvement_score=1, delta=None):
         for u, neighbours in adj_list:
             score = 0
             for v, _ in neighbours.iteritems():
+                w = 1
+                if 'weight' in graph[u][v]:
+                    w = graph[u][v]['weight']
                 if involvement_score == 1:
-                    score += graph[u][v]['weight'] / (1 + prev_tw[v])
+                    score += w / (1 + prev_tw[v])
                 else:
-                    score += graph[u][v]['weight'] / (1 + (prev_tw[v] ** involvement_score))
+                    score += w / (1 + (prev_tw[v] ** involvement_score))
             curr_ti[u] = score
 
         nodes = graph.nodes_iter()
         for v in nodes:
             score = 0
-            edges = graph.in_edges(nbunch=[v],data='weight')
-            #print(v)
-            #print(edges)
+            edges = graph.in_edges(nbunch=[v],data=True)
             for (u, _, d) in edges:
+                w = 1
+                if 'weight' in d:
+                    w = d['weight']
                 if involvement_score == 1:
-                    score += d['weight'] / (1 + prev_ti[u])
+                    score += w / (1 + prev_ti[u])
                 else:
-                    score += d['weight'] / (1 + (prev_ti[u] ** involvement_score))
+                    score += w / (1 + (prev_ti[u] ** involvement_score))
             curr_tw[v] = score
-
-        # adj_list = graph.adjacency_iter()
-        # for u, neighbours in adj_list:
-        #     score = 0
-        #     for v, _ in neighbours.iteritems():
-        #         if involvement_score == 1:
-        #             score += graph[u][v]['weight'] / (1 + prev_ti[v])
-        #         else:
-        #             score += graph[u][v]['weight'] / ((1 + prev_ti[v]) ** involvement_score)
-        #     curr_tw[u] = score
         normalize(curr_ti)
         normalize(curr_tw)
         print('Iteration ', curr_k, ' finished')
