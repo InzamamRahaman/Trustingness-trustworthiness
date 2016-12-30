@@ -32,5 +32,4 @@ in that order.
 
 # TODO
 1. Testing of code for correctness
-2. Need to add requirements.txt
-3. Efficiency improvements ?
+2. Efficiency improvements ?
