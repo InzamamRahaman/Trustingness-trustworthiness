@@ -1,0 +1,2 @@
+numpy=1.11.1
+networkx=1.11
