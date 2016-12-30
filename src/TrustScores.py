@@ -33,8 +33,7 @@ def normalize(d, method='sum-square'):
             d[k] = v / s
 
 
-
-def compute(graph, k,involvement_score=1, delta=None):
+def compute(graph, k,involvement_score=1, normalisation='sum-square', delta=None):
     """
     Computes the trustingness and trustworthiness scores for the supplied
     graph
@@ -95,8 +94,8 @@ def compute(graph, k,involvement_score=1, delta=None):
                 else:
                     score += w / (1 + (prev_ti[u] ** involvement_score))
             curr_tw[v] = score
-        normalize(curr_ti)
-        normalize(curr_tw)
+        normalize(curr_ti, normalisation)
+        normalize(curr_tw, normalisation)
         print('Iteration ', curr_k, ' finished')
         print(k - curr_k,  ' iterations to go!')
         curr_k += 1
